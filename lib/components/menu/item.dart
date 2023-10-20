@@ -26,7 +26,7 @@ class _MenuItemState extends State<MenuItem> {
   Widget build(BuildContext context) {
     return Container(
       // width: widget.width,
-      margin: const EdgeInsets.all(3),
+      margin: const EdgeInsets.all(5),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(3),

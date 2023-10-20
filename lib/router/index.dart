@@ -2,13 +2,14 @@ import 'package:go_app_version_mana/pages/home/index.dart';
 import 'package:go_app_version_mana/pages/login/index.dart';
 import 'package:go_router/go_router.dart';
 
+import '../api/api.dart';
+
 class AppRoutes {
   static const String homePath = '/'; // 根路由
   static const String loginPath = '/login'; // 登录页面
 
   static const String homeNamed = 'home';
   static const String loginNamed = 'login';
-
   static GoRouter router = GoRouter(initialLocation: loginPath, routes: [
     GoRoute(
       name: loginNamed,
@@ -20,7 +21,9 @@ class AppRoutes {
     GoRoute(
       name: homeNamed,
       path: homePath,
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) {
+        return const HomePage();
+      },
     ),
   ]);
 }

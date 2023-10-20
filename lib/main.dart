@@ -2,6 +2,7 @@ import 'package:go_app_version_mana/init/index.dart';
 import 'package:go_app_version_mana/router/index.dart';
 import 'package:go_app_version_mana/store/demo.dart';
 import 'package:flutter/material.dart';
+import 'package:go_app_version_mana/store/repo_list_store.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DemoStore>(create: (_) => DemoStore()),
+        ChangeNotifierProvider<RepoListStore>(create: (_) => RepoListStore()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',

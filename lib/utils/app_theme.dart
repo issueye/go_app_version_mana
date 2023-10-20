@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppTheme {
   // 颜色
@@ -70,4 +71,9 @@ class AppTheme {
 
   static const BorderRadius mainRadius =
       BorderRadius.all(Radius.circular(2)); // 圆角
+}
+
+class Resources {
+  static SvgPicture delete = SvgPicture.asset('assets/svg/delete.svg');
+  static SvgPicture edit = SvgPicture.asset('assets/svg/edit.svg');
 }

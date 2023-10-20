@@ -1,7 +1,6 @@
 import 'package:go_app_version_mana/components/menu/menu.dart';
 import 'package:go_app_version_mana/pages/about/index.dart';
 import 'package:go_app_version_mana/pages/home/win_title.dart';
-import 'package:go_app_version_mana/pages/login/index.dart';
 import 'package:go_app_version_mana/pages/manage/index.dart';
 import 'package:go_app_version_mana/pages/settings/index.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // 主菜单
   final List<MenuItemData> menus = [
-    MenuItemData('程序', Icons.apps, Icons.apps_outlined),
+    MenuItemData('项目管理', Icons.apps, Icons.apps_outlined),
   ];
 
   // 其他菜单
@@ -47,9 +46,8 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 children: [
                   NavMenu(
-                    width: 120,
+                    width: 130,
                     onSelect: (index, type) {
-                      debugPrint('select now = $index type = $type');
                       log.info('select now = $index type = $type');
                       if (type == MenuOperationType.main) {
                         _selectControl.jumpToPage(index);
