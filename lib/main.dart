@@ -1,3 +1,4 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_app_version_mana/init/index.dart';
 import 'package:go_app_version_mana/router/index.dart';
 import 'package:go_app_version_mana/store/demo.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routerConfig: AppRoutes.router,
+        builder: FlutterSmartDialog.init(),
       ),
     );
   }
