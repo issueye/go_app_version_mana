@@ -105,7 +105,10 @@ class _RawButtonState extends State<RawButton> {
           textStyle: MaterialStateProperty.all(const TextStyle(
               fontSize: 11, fontFamily: AppTheme.defaultFontFamily)),
           shape: MaterialStateProperty.all(
-              BeveledRectangleBorder(borderRadius: BorderRadius.circular(0))),
+            BeveledRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+          ),
           padding: MaterialStateProperty.all(
               const EdgeInsetsDirectional.symmetric(
                   horizontal: 2, vertical: 1)), //

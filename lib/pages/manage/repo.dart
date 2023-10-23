@@ -4,10 +4,9 @@ import 'package:go_app_version_mana/components/custom_text_field.dart';
 import 'package:go_app_version_mana/pages/manage/repo_dialog.dart';
 import 'package:go_app_version_mana/pages/manage/repo_item.dart';
 import 'package:go_app_version_mana/utils/app_theme.dart';
-import 'package:go_app_version_mana/utils/request/services.dart';
+import 'package:provider/provider.dart';
 
-import '../../api/api.dart';
-import '../../model/repo_list/datum.dart';
+import '../../store/repo_list_store.dart';
 
 class RepoPage extends StatefulWidget {
   const RepoPage({super.key});
@@ -18,25 +17,17 @@ class RepoPage extends StatefulWidget {
 
 class _RepoPageState extends State<RepoPage> {
   final TextEditingController _qryControl = TextEditingController();
-  List<Datum> tableData = List<Datum>.empty();
-  int selectIndex = 0;
+  late RepoListStore repo = RepoListStore();
 
   Future<void> _getRepoList() async {
-    if (DioSingleton.baseUrl == '') return;
-
-    var data = await Api.getRepoList();
-    tableData = data.data!;
+    await repo.getRepoList();
   }
 
   @override
   void initState() {
     super.initState();
-
-    var widgetsBinding = WidgetsBinding.instance;
-    widgetsBinding.addPostFrameCallback((callback) async {
-      await _getRepoList();
-      setState(() {});
-    });
+    repo = Provider.of<RepoListStore>(context, listen: false);
+    _getRepoList();
   }
 
   @override
@@ -53,40 +44,46 @@ class _RepoPageState extends State<RepoPage> {
               ),
               const SizedBox(width: 10),
               CustomButton(
-                  onPressed: () async {
-                    await _getRepoList();
-                    setState(() {});
-                  },
-                  name: '查询'),
+                name: '查询',
+                onPressed: () async {
+                  await repo.getRepoList();
+                },
+              ),
               const SizedBox(width: 10),
               CustomButton(
-                  onPressed: () async {
-                    await addRepo();
-                  },
-                  name: '添加'),
+                name: '添加',
+                onPressed: () async {
+                  await addRepo();
+                  await repo.getRepoList();
+                },
+              ),
             ],
           ),
           const SizedBox(height: 30),
           Expanded(
-            child: _getRepo(tableData),
+            child: Consumer<RepoListStore>(
+              builder: (context, value, child) {
+                return _getRepo();
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-  _getRepo(List<Datum> data) {
+  _getRepo() {
     return ListView.builder(
-        itemCount: data.length,
+        itemCount: repo.listData == null ? 0 : repo.listData!.data!.length,
         itemBuilder: (context, index) {
+          var data = repo.listData!.data!;
           if (data.isNotEmpty) {
             return RepoItem(
               data: data[index],
-              isSelect: selectIndex == index,
+              isSelect: repo.selectIndex == index,
               onSelect: () {
-                selectIndex = index;
-                debugPrint('$selectIndex');
-                setState(() {});
+                repo.selectIndex = index;
+                repo.selectRepoId = data[index].id;
               },
             );
           } else {

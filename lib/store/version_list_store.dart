@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_app_version_mana/api/api.dart';
+import 'package:go_app_version_mana/model/version_info/version_info.dart';
 import '../model/add_repo.dart';
-import '../model/repo_list/repo_list.dart';
 import '../utils/request/services.dart';
 
-class RepoListStore extends ChangeNotifier {
-  RepoList? _listData;
-  RepoList? get listData => _listData;   // 列表数据
-  set listData(RepoList? data) {
+class VersionStore extends ChangeNotifier {
+  VersionInfo? _listData;
+  VersionInfo? get listData => _listData;   // 列表数据
+  set listData(VersionInfo? data) {
     _listData = data;
     notifyListeners();
   }
-
-  String? selectRepoId;
 
   // 当前选择
   int _selectIndex = 0;
@@ -22,7 +20,7 @@ class RepoListStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  RepoListStore();
+  VersionStore();
 
   int len() {
     if (listData == null) {
@@ -44,9 +42,9 @@ class RepoListStore extends ChangeNotifier {
     await Api.addRepo(repo);
   }
 
-  Future<void> getRepoList() async {
+  Future<void> getVersionList(String id) async {
     if (DioSingleton.baseUrl == '') return;
-    var data = await Api.getRepoList();
+    var data = await Api.getVersionInfoList({'repo_id': id});
     listData = data;
   }
 }

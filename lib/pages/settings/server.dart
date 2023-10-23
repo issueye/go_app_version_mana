@@ -54,6 +54,8 @@ class _ServerSettingsPageState extends State<ServerSettingsPage> {
                 controller: _serverHostController,
                 title: '服务地址',
                 hintText: '请输入服务地址',
+                titleWidth: 65,
+                isHaveTo: true,
               ),
             ),
           ],
@@ -67,7 +69,7 @@ class _ServerSettingsPageState extends State<ServerSettingsPage> {
                 await ConfigDB.setStr(
                     'server_host', _serverHostController.text);
                 var serverHost = await ConfigDB.getStr('server_host');
-                debugPrint('$serverHost');
+                debugPrint(serverHost);
                 // 设置 dio 的baseUrl
                 DioSingleton.baseUrl = serverHost;
               },

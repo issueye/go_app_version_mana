@@ -1,9 +1,9 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_app_version_mana/init/index.dart';
 import 'package:go_app_version_mana/router/index.dart';
-import 'package:go_app_version_mana/store/demo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_app_version_mana/store/repo_list_store.dart';
+import 'package:go_app_version_mana/store/version_list_store.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<DemoStore>(create: (_) => DemoStore()),
         ChangeNotifierProvider<RepoListStore>(create: (_) => RepoListStore()),
+        ChangeNotifierProvider<VersionStore>(create: (_) => VersionStore()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',

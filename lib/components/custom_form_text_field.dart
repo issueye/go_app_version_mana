@@ -9,13 +9,17 @@ class CustomFormTextField extends StatefulWidget {
     this.suffixIcon,
     this.hintText,
     this.title = '',
+    this.titleWidth = 40,
     this.height = 70,
+    this.isHaveTo = false,
   }) : super(key: key);
   final TextEditingController controller;
   IconData? suffixIcon;
   String? hintText;
   String title;
+  double titleWidth;
   double height;
+  bool isHaveTo;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -72,7 +76,16 @@ class _CustomFormTextFieldState extends State<CustomFormTextField> {
               // 内容的字体
               style: AppTheme.defaultTextStyle,
               decoration: InputDecoration(
-                icon: Text(widget.title, style: AppTheme.defaultTextStyle),
+                icon: SizedBox(
+                  width: widget.titleWidth,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _haveTo(),
+                      Text(widget.title, style: AppTheme.defaultTextStyle),
+                    ],
+                  ),
+                ),
                 // isDense: true,
                 isCollapsed: true,
                 // 内容内边距
@@ -91,6 +104,8 @@ class _CustomFormTextFieldState extends State<CustomFormTextField> {
                     _getBorder(AppTheme.errorContentTextColor), // 错误时边框
               ),
               validator: (value) {
+                if (!widget.isHaveTo) return null;
+
                 if (value != null) {
                   if (value.isEmpty) {
                     return widget.hintText;
@@ -105,5 +120,11 @@ class _CustomFormTextFieldState extends State<CustomFormTextField> {
         ],
       ),
     );
+  }
+
+  _haveTo() {
+    return widget.isHaveTo
+        ? const Text('*', style: TextStyle(color: AppTheme.dangerColor))
+        : Container();
   }
 }

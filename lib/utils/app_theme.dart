@@ -76,4 +76,5 @@ class AppTheme {
 class Resources {
   static SvgPicture delete = SvgPicture.asset('assets/svg/delete.svg');
   static SvgPicture edit = SvgPicture.asset('assets/svg/edit.svg');
+  static SvgPicture cancel = SvgPicture.asset('assets/svg/cancel.svg');
 }

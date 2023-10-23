@@ -3,16 +3,20 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class CustomSelect extends StatefulWidget {
-  const CustomSelect(
-      {Key? key,
-      this.hint,
-      this.validText,
-      required this.data,
-      this.onChanged,
-      required this.selectData})
-      : super(key: key);
+  const CustomSelect({
+    Key? key,
+    this.hint,
+    this.validText,
+    required this.data,
+    this.onChanged,
+    required this.selectData,
+    this.title = '',
+    this.titleWidth = 70,
+  }) : super(key: key);
   final String? hint;
   final String? validText;
+  final String title;
+  final double titleWidth;
   final Map<String, dynamic> data;
   final Function(dynamic)? onChanged;
   final TextEditingController selectData;
@@ -39,14 +43,23 @@ class _CustomSelectState extends State<CustomSelect> {
       ),
       child: DropdownButtonFormField2(
         isExpanded: true,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           isCollapsed: true,
+          icon: SizedBox(
+            width: widget.titleWidth,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(widget.title, style: AppTheme.defaultTextStyle),
+              ],
+            ),
+          ),
           contentPadding: AppTheme.defaultTextFieldContentPadding,
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: AppTheme.mainRadius,
           ),
           // 聚焦时的边框
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             gapPadding: 0,
             borderSide: BorderSide(
               color: AppTheme.mainColor,
@@ -54,14 +67,14 @@ class _CustomSelectState extends State<CustomSelect> {
             borderRadius: AppTheme.mainRadius,
           ),
           // 失去焦点时的边框
-          enabledBorder: OutlineInputBorder(
+          enabledBorder: const OutlineInputBorder(
             gapPadding: 0,
             borderSide: BorderSide(
               color: AppTheme.enabledColor,
             ),
             borderRadius: AppTheme.mainRadius,
           ),
-          errorBorder: OutlineInputBorder(
+          errorBorder: const OutlineInputBorder(
             gapPadding: 0,
             borderSide: BorderSide(
               color: AppTheme.errorContentTextColor,
@@ -96,34 +109,32 @@ class _CustomSelectState extends State<CustomSelect> {
           height: 28,
         ),
         onChanged: widget.onChanged,
-        customButton: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.selectData.text == ''
-                    ? widget.hint!
-                    : widget.selectData.text,
-                style: AppTheme.defaultTextStyle,
-              ),
+        customButton: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
               widget.selectData.text == ''
-                  ? const Icon(
-                      Icons.arrow_drop_down_outlined,
+                  ? widget.hint!
+                  : widget.selectData.text,
+              style: AppTheme.defaultTextStyle,
+            ),
+            widget.selectData.text == ''
+                ? const Icon(
+                    Icons.arrow_drop_down_outlined,
+                    color: AppTheme.defaultContentTextColor,
+                  )
+                : InkWell(
+                    onTap: () {
+                      widget.selectData.text = '';
+                      setState(() {});
+                    },
+                    child: const Icon(
+                      Icons.close_outlined,
+                      size: 15,
                       color: AppTheme.defaultContentTextColor,
-                    )
-                  : InkWell(
-                      onTap: () {
-                        widget.selectData.text = '';
-                        setState(() {});
-                      },
-                      child: const Icon(
-                        Icons.close_outlined,
-                        size: 15,
-                        color: AppTheme.defaultContentTextColor,
-                      ),
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       ),
     );
